@@ -1,0 +1,27 @@
+@model WebApp.Models.MessageModel
+
+@{
+    ViewData["Title"] = "Send Service Bus Message";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Send a Service Bus Message</h1>
+
+    @if (!string.IsNullOrEmpty(Model?.StatusMessage))
+    {
+        <div class="alert @(Model.StatusMessage.StartsWith("Message sent") ? "alert-success" : "alert-danger") alert-dismissible fade show" role="alert">
+            @Model.StatusMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <form asp-action="SendMessage" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label asp-for="MessageText" class="form-label">Message</label>
+            <textarea asp-for="MessageText" class="form-control" rows="4"
+                      placeholder="Enter your message here..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send to Service Bus</button>
+    </form>
+</div>
